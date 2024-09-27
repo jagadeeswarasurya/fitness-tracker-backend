@@ -1,5 +1,4 @@
-// config/jwt.js
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
@@ -7,7 +6,4 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'your_default_jwt_secret';
 const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '1h';
 
-module.exports = {
-    JWT_SECRET,
-    JWT_EXPIRATION,
-};
+export { JWT_SECRET, JWT_EXPIRATION };

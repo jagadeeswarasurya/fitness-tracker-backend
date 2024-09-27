@@ -1,11 +1,9 @@
-// controllers/workoutController.js
+import Workout from '../models/Workout.js'; // Add .js extension
 
-const Workout = require('../models/Workout');
-
-// Created a new workout
+// Create a new workout
 const createWorkout = async (req, res) => {
     const { exercise, duration, intensity, caloriesBurned } = req.body;
-    const userId = req.user; 
+    const userId = req.user;
 
     try {
         const newWorkout = new Workout({
@@ -25,7 +23,7 @@ const createWorkout = async (req, res) => {
 
 // Get all workouts for a user
 const getWorkouts = async (req, res) => {
-    const userId = req.user; 
+    const userId = req.user;
 
     try {
         const workouts = await Workout.find({ userId });
@@ -44,7 +42,7 @@ const updateWorkout = async (req, res) => {
         const updatedWorkout = await Workout.findByIdAndUpdate(
             workoutId,
             { exercise, duration, intensity, caloriesBurned },
-            { new: true, runValidators: true } 
+            { new: true, runValidators: true }
         );
 
         if (!updatedWorkout) {
@@ -74,7 +72,8 @@ const deleteWorkout = async (req, res) => {
     }
 };
 
-module.exports = {
+// Exporting the controller functions using ES Module syntax
+export {
     createWorkout,
     getWorkouts,
     updateWorkout,

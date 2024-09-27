@@ -1,13 +1,13 @@
 // routes/fitnessGoalRoutes.js
 
-const express = require('express');
-const {
+import express from 'express';
+import {
     createGoal,
     updateGoal,
     deleteGoal,
     getGoals,
-} = require('../controllers/fitnessGoalController');
-const { protect } = require('../middleware/authMiddleware');
+} from '../controllers/fitnessGoalController.js'; // Ensure the path and .js extension are correct
+import { protect } from '../middleware/authMiddleware.js'; // Ensure the path and .js extension are correct
 
 const router = express.Router();
 
@@ -27,4 +27,5 @@ router.put('/:goalId', protect, updateGoal);
 // DELETE /api/fitness-goals/:goalId
 router.delete('/:goalId', protect, deleteGoal);
 
-module.exports = router;
+// Use export default for ES Module syntax
+export default router;

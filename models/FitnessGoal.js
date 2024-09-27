@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Defined the FitnessGoal schema
 const fitnessGoalSchema = new mongoose.Schema({
@@ -34,4 +34,4 @@ fitnessGoalSchema.pre('save', function (next) {
 
 // Create and export the FitnessGoal model
 const FitnessGoal = mongoose.model('FitnessGoal', fitnessGoalSchema);
-module.exports = FitnessGoal;
+export default FitnessGoal;

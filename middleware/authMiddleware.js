@@ -1,11 +1,9 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken'; // Use ES Module import
 
 // Middleware to protect routes
 const protect = (req, res, next) => {
-    
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
-           
             const token = req.headers.authorization.split(' ')[1];
             console.log('Extracted Token:', token); // Debug log
             
@@ -27,4 +25,5 @@ const protect = (req, res, next) => {
     return res.status(401).json({ message: 'Not authorized, no token' });
 };
 
-module.exports = { protect };
+// Use ES Module export syntax
+export { protect }; // Export protect middleware

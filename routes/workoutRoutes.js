@@ -1,13 +1,11 @@
-// routes/workoutRoutes.js
-
-const express = require('express');
-const {
+import express from 'express';
+import {
     createWorkout,
     getWorkouts,
     updateWorkout,
     deleteWorkout,
-} = require('../controllers/workoutController');
-const { protect } = require('../middleware/authMiddleware');
+} from '../controllers/workoutController.js'; // Add .js extension
+import { protect } from '../middleware/authMiddleware.js'; // Add .js extension
 
 const router = express.Router();
 
@@ -27,4 +25,5 @@ router.put('/:workoutId', protect, updateWorkout);
 // DELETE /api/workouts/:workoutId
 router.delete('/:workoutId', protect, deleteWorkout);
 
-module.exports = router;
+// Exporting the router using ES Module syntax
+export default router;

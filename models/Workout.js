@@ -1,6 +1,4 @@
-// models/Workout.js
-
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const workoutSchema = new mongoose.Schema({
     userId: {
@@ -30,4 +28,5 @@ const workoutSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Workout', workoutSchema);
+// Exporting the Workout model using ES Module syntax
+export default mongoose.model('Workout', workoutSchema);

@@ -1,11 +1,12 @@
-const FitnessGoal = require('../models/FitnessGoal');
+// controllers/fitnessGoalController.js
+
+import FitnessGoal from '../models/FitnessGoal.js'; // Ensure you use .js extension
 
 // Created a new fitness goal
-const createGoal = async (req, res) => {
+export const createGoal = async (req, res) => {
     const { goalType, target } = req.body;
 
     try {
-        
         const newGoal = new FitnessGoal({
             user: req.user, 
             goalType,
@@ -20,7 +21,7 @@ const createGoal = async (req, res) => {
 };
 
 // Get all fitness goals for the logged-in user
-const getGoals = async (req, res) => {
+export const getGoals = async (req, res) => {
     try {
         const goals = await FitnessGoal.find({ user: req.user });
         res.json(goals);
@@ -30,7 +31,7 @@ const getGoals = async (req, res) => {
 };
 
 // Update a fitness goal by ID
-const updateGoal = async (req, res) => {
+export const updateGoal = async (req, res) => {
     const { goalId } = req.params;
     const { goalType, target } = req.body;
 
@@ -53,7 +54,7 @@ const updateGoal = async (req, res) => {
 };
 
 // Delete a fitness goal by ID
-const deleteGoal = async (req, res) => {
+export const deleteGoal = async (req, res) => {
     const { goalId } = req.params;
 
     try {
@@ -69,12 +70,11 @@ const deleteGoal = async (req, res) => {
     }
 };
 
-
-const getGoalById = async (req, res) => {
+// Get a fitness goal by ID
+export const getGoalById = async (req, res) => {
     const { goalId } = req.params;
 
     try {
-        
         const goal = await FitnessGoal.findById(goalId);
 
         if (!goal) {
@@ -89,12 +89,4 @@ const getGoalById = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-};
-
-module.exports = {
-    createGoal,
-    getGoals,
-    updateGoal,
-    deleteGoal,
-    getGoalById,
 };

@@ -1,3 +1,5 @@
+// middleware/errorHandler.js
+
 const errorHandler = (err, req, res, next) => {
     // Log the error stack for debugging (in all environments)
     console.error(err.stack);
@@ -9,9 +11,9 @@ const errorHandler = (err, req, res, next) => {
     // Send error message and stack (if not in production)
     res.json({
         message: err.message,
-        stack: process.env.NODE_ENV === 'production' ? null : err.stack 
+        stack: process.env.NODE_ENV === 'production' ? null : err.stack,
     });
-
 };
 
-module.exports = errorHandler;
+// Use default export for ES Module syntax
+export default errorHandler;

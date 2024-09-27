@@ -1,13 +1,13 @@
 // routes/nutritionRoutes.js
 
-const express = require('express');
-const {
+import express from 'express';
+import {
     createNutrition,
     getNutritionEntries,
     updateNutrition,
     deleteNutrition,
-} = require('../controllers/nutritionController');
-const { protect } = require('../middleware/authMiddleware'); // Middleware for authentication
+} from '../controllers/nutritionController.js'; // Add .js extension
+import { protect } from '../middleware/authMiddleware.js'; // Add .js extension
 
 const router = express.Router();
 
@@ -27,4 +27,5 @@ router.put('/:nutritionId', protect, updateNutrition);
 // DELETE /api/nutrition/:nutritionId
 router.delete('/:nutritionId', protect, deleteNutrition);
 
-module.exports = router;
+// Export the router using ES Module syntax
+export default router;

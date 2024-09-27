@@ -1,10 +1,10 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const { JWT_SECRET, JWT_EXPIRATION } = require('../config/jwt');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js'; // Add .js extension
+import { JWT_SECRET, JWT_EXPIRATION } from '../config/jwt.js'; // Add .js extension
 
 // Register a new user
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     const { username, password } = req.body;
     try {
         const existingUser = await User.findOne({ username });
@@ -21,7 +21,8 @@ const registerUser = async (req, res) => {
     }
 };
 
-const loginUser = async (req, res) => {
+// Login user
+export const loginUser = async (req, res) => {
     const { username, password } = req.body;
     try {
         // Check if user exists
@@ -40,7 +41,6 @@ const loginUser = async (req, res) => {
             expiresIn: '1h', 
         });
 
-        
         res.json({ token });
     } catch (error) {
         console.error(error); 
@@ -49,7 +49,7 @@ const loginUser = async (req, res) => {
 };
 
 // Get user profile
-const getUserProfile = async (req, res) => {
+export const getUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user);
         if (!user) {
@@ -60,10 +60,4 @@ const getUserProfile = async (req, res) => {
         console.error(error); 
         res.status(500).json({ message: 'Server error, please try again later' });
     }
-};
-
-module.exports = {
-    registerUser,
-    loginUser,
-    getUserProfile,
 };

@@ -1,8 +1,8 @@
 // controllers/nutritionController.js
 
-const Nutrition = require('../models/Nutrition'); 
+import Nutrition from '../models/Nutrition.js'; // Ensure you include the .js extension
 
-// Created a new nutrition entry
+// Create a new nutrition entry
 const createNutrition = async (req, res) => {
     const { meal, calories, date } = req.body;
 
@@ -70,7 +70,8 @@ const deleteNutrition = async (req, res) => {
     }
 };
 
-module.exports = {
+// Export the controller functions using ES Module syntax
+export {
     createNutrition,
     getNutritionEntries,
     updateNutrition,
