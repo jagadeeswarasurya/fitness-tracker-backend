@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./middleware/errorHandler'); // Import error handler
 
-// Loaded environment variables
+// Load environment variables
 dotenv.config();
 
 // Database Connection
