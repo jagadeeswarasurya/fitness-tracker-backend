@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 // Load environment variables from .env file
 dotenv.config();
 
-const dbUrl = "localhost:27017"; // Local MongoDB URL
+// const dbUrl = "localhost:27017"; // Local MongoDB URL
 const dbName = process.env.DB_NAME || "fitness_tracker"; // Database name
 
 // Cloud DB credentials
