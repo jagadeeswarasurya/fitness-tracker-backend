@@ -2,7 +2,6 @@ import express from 'express';
 import connectDB from './config/db.js'; // Use .js extension
 import dotenv from 'dotenv';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import errorHandler from './middleware/errorHandler.js'; // Use .js extension
 
 dotenv.config();
@@ -10,8 +9,15 @@ dotenv.config();
 const app = express();
 connectDB();
 
-app.use(cors());
-app.use(bodyParser.json());
+// CORS Configuration
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your frontend URL if deployed
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+};
+
+app.use(cors(corsOptions));
+app.use(express.json()); // Use built-in express.json()
 
 // Import routes
 import userRoutes from './routes/userRoutes.js';
