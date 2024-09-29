@@ -4,22 +4,32 @@ import User from '../models/User.js'; // Add .js extension
 import { JWT_SECRET, JWT_EXPIRATION } from '../config/jwt.js'; // Add .js extension
 
 // Register a new user
+// Register a new user
 export const registerUser = async (req, res) => {
     const { username, password } = req.body;
+
+    // Check for required fields
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required.' });
+    }
+
     try {
         const existingUser = await User.findOne({ username });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ username, password: hashedPassword });
         await newUser.save();
+
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        console.error(error); 
+        console.error('Registration Error:', error); // Detailed error logging
         res.status(500).json({ message: 'Server error, please try again later' });
     }
 };
+
 
 // Login user
 export const loginUser = async (req, res) => {
