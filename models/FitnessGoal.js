@@ -34,4 +34,4 @@ fitnessGoalSchema.pre('save', function (next) {
 
 // Create and export the FitnessGoal model
 const FitnessGoal = mongoose.model('FitnessGoal', fitnessGoalSchema);
-export default FitnessGoal;
+export default FitnessGoal; // Ensure this line is correct
