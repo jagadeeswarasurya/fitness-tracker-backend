@@ -6,9 +6,11 @@ import FitnessGoal from '../models/FitnessGoal.js'; // Ensure you use .js extens
 export const createGoal = async (req, res) => {
     const { goalType, target } = req.body;
 
+    console.log('Request body:', req.body); // Log the request body for debugging
+
     try {
         const newGoal = new FitnessGoal({
-            user: req.user, 
+            user: req.user,
             goalType,
             target,
         });
@@ -16,10 +18,10 @@ export const createGoal = async (req, res) => {
         await newGoal.save();
         res.status(201).json(newGoal);
     } catch (error) {
+        console.error('Error creating goal:', error); // Log the error for debugging
         res.status(500).json({ message: error.message });
     }
 };
-
 // Get all fitness goals for the logged-in user
 export const getGoals = async (req, res) => {
     try {
