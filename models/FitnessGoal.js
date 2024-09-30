@@ -14,7 +14,7 @@ const fitnessGoalSchema = new mongoose.Schema({
         validate: {
             validator: function (value) {
                 const normalizedValue = value.toLowerCase(); // Normalize input to lower case
-                return ['weight loss', 'muscle gain', 'endurance', 'other', 'lose weight'].includes(normalizedValue);
+                return ['weight loss', 'muscle gain', 'endurance', 'other', 'weight gain'].includes(normalizedValue);
             },
             message: props => `${props.value} is not a valid goalType!`,
         },
