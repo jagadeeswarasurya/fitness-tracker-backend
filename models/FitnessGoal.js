@@ -4,25 +4,32 @@ import mongoose from 'mongoose';
 const fitnessGoalSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', 
+        ref: 'User',
         required: true,
     },
     goalType: {
         type: String,
-        enum: ['Weight Loss', 'Muscle Gain', 'Endurance', 'Other', 'Lose Weight'], // Add 'Lose Weight' here
         required: true,
+        // Custom validator for case-insensitive matching
+        validate: {
+            validator: function (value) {
+                const normalizedValue = value.toLowerCase(); // Normalize input to lower case
+                return ['weight loss', 'muscle gain', 'endurance', 'other', 'lose weight'].includes(normalizedValue);
+            },
+            message: props => `${props.value} is not a valid goalType!`,
+        },
     },
     target: {
         type: Number,
-        required: true, // Target value for the fitness goal 
+        required: true, // Target value for the fitness goal
     },
     createdAt: {
         type: Date,
-        default: Date.now, 
+        default: Date.now,
     },
     updatedAt: {
         type: Date,
-        default: Date.now, 
+        default: Date.now,
     },
 });
 
