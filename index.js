@@ -4,10 +4,13 @@ import dotenv from 'dotenv';
 import cors from 'cors'; // Correctly import cors
 import errorHandler from './middleware/errorHandler.js'; // Use .js extension
 
-dotenv.config();
+dotenv.config(); // Load environment variables
 
 const app = express();
 connectDB();
+
+// Middleware to parse incoming JSON data
+app.use(express.json()); // <-- Fix: Ensure express can parse JSON requests
 
 // CORS configuration
 const corsOptions = {

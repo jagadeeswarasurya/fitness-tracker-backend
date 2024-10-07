@@ -1,9 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js'; // Add .js extension
-import { JWT_SECRET, JWT_EXPIRATION } from '../config/jwt.js'; // Add .js extension
 
-// Register a new user
 // Register a new user
 export const registerUser = async (req, res) => {
     const { username, password } = req.body;
@@ -30,12 +28,11 @@ export const registerUser = async (req, res) => {
     }
 };
 
-
 // Login user
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
+
     try {
-        // Check if user exists
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
@@ -47,9 +44,7 @@ export const loginUser = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h', 
-        });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.json({ token });
     } catch (error) {
