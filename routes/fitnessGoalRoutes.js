@@ -1,5 +1,3 @@
-// routes/fitnessGoalRoutes.js
-
 import express from 'express';
 import {
     createGoal,
@@ -26,6 +24,12 @@ router.put('/:goalId', protect, updateGoal);
 // Route to delete a fitness goal by ID
 // DELETE /api/fitness-goals/:goalId
 router.delete('/:goalId', protect, deleteGoal);
+
+// Global error handling middleware
+router.use((err, req, res, next) => {
+    console.error(err.stack); // Log the error stack
+    res.status(500).json({ message: 'An unexpected error occurred' });
+});
 
 // Use export default for ES Module syntax
 export default router;

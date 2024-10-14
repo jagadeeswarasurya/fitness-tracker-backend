@@ -5,7 +5,7 @@ export const createNutrition = async (req, res) => {
     const { foodItem, calories, protein, carbs, fats, date } = req.body;
 
     try {
-        if (!req.user || !req.user._id) {
+        if (!req.user) {
             return res.status(401).json({ message: 'Not authorized, user not found' });
         }
 
@@ -14,7 +14,7 @@ export const createNutrition = async (req, res) => {
         }
 
         const newNutrition = new Nutrition({
-            userId: req.user._id,
+            userId: req.user,  // Directly use req.user as it holds the user's ID
             foodItem,
             calories,
             protein,
@@ -33,7 +33,7 @@ export const createNutrition = async (req, res) => {
 // Get all nutrition entries for the authenticated user
 export const getNutritionEntries = async (req, res) => {
     try {
-        const nutritionEntries = await Nutrition.find({ userId: req.user._id });
+        const nutritionEntries = await Nutrition.find({ userId: req.user });
         res.json(nutritionEntries);
     } catch (error) {
         res.status(500).json({ message: error.message });
