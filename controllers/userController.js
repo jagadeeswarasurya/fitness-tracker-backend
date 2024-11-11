@@ -23,13 +23,19 @@ export const registerUser = async (req, res) => {
         const newUser = new User({ username, password: hashedPassword });
         await newUser.save(); // Save the new user
 
-        res.status(201).json({ message: 'User registered successfully' });
+        // Respond with the user details
+        res.status(201).json({
+            message: 'User registered successfully',
+            user: {
+                id: newUser._id, // Include user ID
+                username: newUser.username // Include username
+            }
+        });
     } catch (error) {
         console.error('Registration Error:', error); // Detailed error logging
         res.status(500).json({ message: 'Server error, please try again later' });
     }
 };
-
 // Login user
 export const loginUser = async (req, res) => {
     const { username, password } = req.body;
@@ -50,12 +56,20 @@ export const loginUser = async (req, res) => {
         // Generate JWT token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.json({ token }); // Send the token back to the client
+        // Send the token and user details back to the client
+        res.json({
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+            },
+        });
     } catch (error) {
-        console.error('Login Error:', error); 
+        console.error('Login Error:', error);
         res.status(500).json({ message: 'Server error, please try again later' });
     }
 };
+
 
 // Get user profile
 export const getUserProfile = async (req, res) => {
@@ -67,13 +81,12 @@ export const getUserProfile = async (req, res) => {
         }
 
         // Return the username and createdAt date
-        res.json({ 
-            username: user.username, 
+        res.json({
+            username: user.username,
             createdAt: user.createdAt // Include createdAt in the response
         });
     } catch (error) {
-        console.error('Profile Fetch Error:', error); 
+        console.error('Profile Fetch Error:', error);
         res.status(500).json({ message: 'Server error, please try again later' });
     }
 };
-

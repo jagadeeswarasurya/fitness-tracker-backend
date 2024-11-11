@@ -16,5 +16,5 @@ const userSchema = new mongoose.Schema({
     },
 });
 
-// Exporting the User model using ES Module syntax
+// Exporting the User model
 export default mongoose.model('User', userSchema);
