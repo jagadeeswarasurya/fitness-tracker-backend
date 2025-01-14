@@ -7,7 +7,7 @@ const router = express.Router();
 // User registration route
 router.post('/register', registerUser);
 
-// User login route
+// User login routeinternet speed test
 router.post('/login', loginUser);
 
 // Get user profile (protected route)

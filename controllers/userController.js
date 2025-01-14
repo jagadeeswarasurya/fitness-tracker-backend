@@ -1,6 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js'; // Import User model
+import Workout from '../models/Workout.js'; // Import Workout model
+import Nutrition from '../models/Nutrition.js'; // Import Nutrition model
+import FitnessGoal from '../models/FitnessGoal.js'; // Import FitnessGoal model
 
 // Register a new user
 export const registerUser = async (req, res) => {
@@ -74,17 +77,32 @@ export const loginUser = async (req, res) => {
 // Get user profile
 export const getUserProfile = async (req, res) => {
     try {
-        // Use req.user to find the user by ID
-        const user = await User.findById(req.user.id); // Ensure req.user.id is used
+        // Find user and populate related data
+        const user = await User.findById(req.user.id)
+            .select('-password'); // Exclude password
+
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Return the username and createdAt date
-        res.json({
+        // Fetch related data in parallel
+        const [workouts, nutritionEntries, fitnessGoals] = await Promise.all([
+            Workout.find({ userId: user._id }).sort({ date: -1 }),
+            Nutrition.find({ userId: user._id }).sort({ date: -1 }),
+            FitnessGoal.find({ userId: user._id })
+        ]);
+
+        // Construct the response object
+        const userProfile = {
             username: user.username,
-            createdAt: user.createdAt // Include createdAt in the response
-        });
+            createdAt: user.createdAt,
+            workouts: workouts || [],
+            nutrition: nutritionEntries || [],
+            fitnessGoals: fitnessGoals || [],
+            // Add any other user fields you want to include
+        };
+
+        res.json(userProfile);
     } catch (error) {
         console.error('Profile Fetch Error:', error);
         res.status(500).json({ message: 'Server error, please try again later' });
